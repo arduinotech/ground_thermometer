@@ -20,6 +20,12 @@ class MainScreen: public BaseScreen
 
     private:
         uint32_t _lastUpdateScreen;
+        String _lastDate;
+        String _lastTime;
+        int8_t _lastSensor1Value;
+        int8_t _lastSensor2Value;
+
+        uint8_t _curMenuItem;
 };
 
 #endif

@@ -7,6 +7,10 @@ MainScreen::MainScreen(ScreensProvider *screensProvider):
 BaseScreen(screensProvider)
 {
     _lastUpdateScreen = 0;
+    _lastDate = "";
+    _lastTime = "";
+    _lastSensor1Value = 0;
+    _lastSensor2Value = 0;
 }
 
 BaseScreen *MainScreen::staticConstructor(ScreensProvider *screensProvider)
@@ -29,12 +33,32 @@ BaseScreen::StaticConstructorPtr MainScreen::tick()
 
     if ((now - _lastUpdateScreen) > 1000) {
         _lastUpdateScreen = now;
-        Display::getInstance()->clearScreen();
-        Display::getInstance()->print(Rtc::getInstance()->getDateString().c_str(), 0, 0);
-        Display::getInstance()->print(Rtc::getInstance()->getTimeString().c_str(), 0, 1);
-        Display::getInstance()->print(String(_screensProvider->getLastSensor1Value()).c_str(), 0, 2);
-        Display::getInstance()->print(String(_screensProvider->getLastSensor2Value()).c_str(), 0, 3);
 
+        String date = Rtc::getInstance()->getDateString();
+        if (date != _lastDate) {
+            _lastDate = date;
+            Display::getInstance()->print(date.c_str(), 2, 0);
+        }
+
+        String time = Rtc::getInstance()->getTimeString();
+        if (time != _lastTime) {
+            _lastTime = time;
+            Display::getInstance()->print(time.c_str(), 2, 1);
+        }
+
+        int8_t sensorValue1 = _screensProvider->getLastSensor1Value();
+        if (sensorValue1 != _lastSensor1Value) {
+            _lastSensor1Value = sensorValue1;
+            Display::getInstance()->print(String("   ").c_str(), 2, 2);
+            Display::getInstance()->print(String(sensorValue1).c_str(), 2, 2);
+        }
+
+        int8_t sensorValue2 = _screensProvider->getLastSensor2Value();
+        if (sensorValue2 != _lastSensor2Value) {
+            _lastSensor2Value = sensorValue2;
+            Display::getInstance()->print(String("   ").c_str(), 2, 3);
+            Display::getInstance()->print(String(sensorValue2).c_str(), 2, 3);
+        }
     }
 
     return MainScreen::staticConstructor;
@@ -43,28 +67,36 @@ BaseScreen::StaticConstructorPtr MainScreen::tick()
 void MainScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
 {
     Display::getInstance()->clearScreen();
+    Display::getInstance()->print(String("->").c_str(), 0, 1);
+    _curMenuItem = 0;
 }
 
 BaseScreen::StaticConstructorPtr MainScreen::clickUpButton()
 {
-    Display::getInstance()->print("clickUpButton", 0, 0);
+    if (_curMenuItem > 0) {
+        Display::getInstance()->print(String("  ").c_str(), 0, _curMenuItem + 1);
+        _curMenuItem--;
+        Display::getInstance()->print(String("->").c_str(), 0, _curMenuItem + 1);
+    }
     return MainScreen::staticConstructor;
 }
 
 BaseScreen::StaticConstructorPtr MainScreen::clickDownButton()
 {
-    Display::getInstance()->print("clickDownButton", 0, 0);
+    if (_curMenuItem < 2) {
+        Display::getInstance()->print(String("  ").c_str(), 0, _curMenuItem + 1);
+        _curMenuItem++;
+        Display::getInstance()->print(String("->").c_str(), 0, _curMenuItem + 1);
+    }
     return MainScreen::staticConstructor;
 }
 
 BaseScreen::StaticConstructorPtr MainScreen::clickCancelButton()
 {
-    Display::getInstance()->print("clickCancelButton", 0, 0);
     return MainScreen::staticConstructor;
 }
 
 BaseScreen::StaticConstructorPtr MainScreen::clickOkButton()
 {
-    Display::getInstance()->print("clickOkButton", 0, 0);
     return MainScreen::staticConstructor;
 }
