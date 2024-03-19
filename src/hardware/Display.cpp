@@ -30,6 +30,12 @@ void Display::print(const char *text, uint8_t x, uint8_t y)
     _lcd->print(text);
 }
 
+void Display::print(String text, uint8_t x, uint8_t y)
+{
+    _lcd->setCursor(x, y);
+    _lcd->print(text.c_str());
+}
+
 void Display::error(const char *text)
 {
     clearScreen();

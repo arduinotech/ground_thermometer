@@ -10,14 +10,9 @@ Rtc *Rtc::getInstance()
     return _instance;
 }
 
-String Rtc::getDateString()
+MicroDS3231 *Rtc::getRtc()
 {
-    return _rtc->getDateString();
-}
-
-String Rtc::getTimeString()
-{
-    return _rtc->getTimeString();
+    return _rtc;
 }
 
 Rtc::Rtc()

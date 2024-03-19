@@ -7,8 +7,7 @@ class Rtc
 {
     public:
         static Rtc *getInstance();
-        String getDateString();
-        String getTimeString();
+        MicroDS3231 *getRtc();
 
     protected:
         Rtc();

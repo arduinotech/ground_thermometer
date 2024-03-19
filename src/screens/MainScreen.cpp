@@ -2,6 +2,7 @@
 #include "hardware/Display.h"
 #include "hardware/Rtc.h"
 #include "ScreensProvider.h"
+#include "TimeSetScreen.h"
 
 MainScreen::MainScreen(ScreensProvider *screensProvider):
 BaseScreen(screensProvider)
@@ -34,13 +35,13 @@ BaseScreen::StaticConstructorPtr MainScreen::tick()
     if ((now - _lastUpdateScreen) > 1000) {
         _lastUpdateScreen = now;
 
-        String date = Rtc::getInstance()->getDateString();
+        String date = Rtc::getInstance()->getRtc()->getDateString();
         if (date != _lastDate) {
             _lastDate = date;
             Display::getInstance()->print(date.c_str(), 2, 0);
         }
 
-        String time = Rtc::getInstance()->getTimeString();
+        String time = Rtc::getInstance()->getRtc()->getTimeString();
         if (time != _lastTime) {
             _lastTime = time;
             Display::getInstance()->print(time.c_str(), 2, 1);
@@ -67,8 +68,13 @@ BaseScreen::StaticConstructorPtr MainScreen::tick()
 void MainScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
 {
     Display::getInstance()->clearScreen();
-    Display::getInstance()->print(String("->").c_str(), 0, 1);
-    _curMenuItem = 0;
+    if (TimeSetScreen::staticConstructor == fromScreen) {
+        _curMenuItem = 0;
+    } else {
+        _curMenuItem = 0;
+    }
+
+    Display::getInstance()->print(String("->").c_str(), 0, _curMenuItem + 1);
 }
 
 BaseScreen::StaticConstructorPtr MainScreen::clickUpButton()
@@ -98,5 +104,8 @@ BaseScreen::StaticConstructorPtr MainScreen::clickCancelButton()
 
 BaseScreen::StaticConstructorPtr MainScreen::clickOkButton()
 {
+    if (0 == _curMenuItem) {
+        return TimeSetScreen::staticConstructor;
+    }
     return MainScreen::staticConstructor;
 }
