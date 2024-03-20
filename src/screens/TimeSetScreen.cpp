@@ -145,8 +145,13 @@ BaseScreen::StaticConstructorPtr TimeSetScreen::clickCancelButton()
 
 BaseScreen::StaticConstructorPtr TimeSetScreen::clickOkButton()
 {
-
-    return TimeSetScreen::staticConstructor;
+    if (_curPosition < 5) {
+        _curPosition++;
+        drawCursor(_curPosition - 1, _curPosition);
+        return TimeSetScreen::staticConstructor;
+    }
+    Rtc::getInstance()->getRtc()->setTime(_curSeconds, _curMinutes, _curHours, _curDate, _curMonth, _curYear);
+    return MainScreen::staticConstructor;
 }
 
 uint8_t TimeSetScreen::getNumOfDaysInMonth(uint16_t year, uint8_t month)
