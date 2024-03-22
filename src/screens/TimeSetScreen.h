@@ -26,9 +26,6 @@ class TimeSetScreen: public BaseScreen
         uint8_t _curMonth;
         uint16_t _curYear;
 
-        static uint8_t getNumOfDaysInMonth(uint16_t year, uint8_t month);
-        static String formatByteNum(uint8_t num);
-
         static uint8_t posToCursorPos(uint8_t pos);
         void drawCursor(uint8_t oldPos, uint8_t newPos);
 };

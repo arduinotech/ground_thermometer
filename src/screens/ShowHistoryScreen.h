@@ -21,6 +21,14 @@ class ShowHistoryScreen: public BaseScreen
 
     private:
         uint8_t _sensorNum;
+        uint8_t _cursor;
+        void drawCursor(uint8_t oldPos, uint8_t newPos);
+        bool _isSetting;
+        uint16_t _curYear;
+        uint8_t _curDate;
+        uint8_t _curMonth;
+        uint8_t _curHour;
+        uint8_t _oneHoursFormat;
 };
 
 #endif
