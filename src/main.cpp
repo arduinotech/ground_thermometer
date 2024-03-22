@@ -4,18 +4,42 @@
 #include "hardware/Config.h"
 #include "ScreensProvider.h"
 #include "Error.h"
+#include "hardware/Storage.h"
+#include "types/TempLogRecord.h"
 
 MicroDS18B20<PIN_SENSOR_1> sensor1;
 MicroDS18B20<PIN_SENSOR_2> sensor2;
 
 ScreensProvider *screensProvider;
 
+// void addTestDataToStorage()
+// {
+//     for (uint8_t i = 0; i <= 13; i++) {
+//         TempLogRecord record;
+//         record.hour = i;
+//         record.date = 22;
+//         record.month = 3;
+//         record.year = 2024;
+//         record.tempSensor1 = i - 5;
+//         record.tempSensor2 = i - 3;
+//         Storage::getInstance()->saveLogRecord(record);
+//     }
+// }
+
 void setup()
 {
     Serial.begin(115200);
 
+    // Запустить 1 раз при замене платы Arduino
+    // Storage::getInstance()->initMemory();
+
+    // addTestDataToStorage();
+
     Controls *controls = new Controls();
     screensProvider = new ScreensProvider(controls);
+
+    delay(3000);
+    Storage::getInstance()->showDataToConsole();
 }
 
 void loop()

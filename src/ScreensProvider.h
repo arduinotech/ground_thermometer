@@ -20,8 +20,10 @@ class ScreensProvider
         BaseScreen *_currentScreen;
         int8_t _sensor1LastValue;
         int8_t _sensor2LastValue;
+        int8_t _curHour;
 
         void setCurrentScreen(BaseScreen::StaticConstructorPtr staticConstructorPtr);
+        void saveLogRecordIfNeed();
 };
 
 #endif

@@ -1,5 +1,8 @@
 #include "ScreensProvider.h"
 #include "screens/MainScreen.h"
+#include "hardware/Rtc.h"
+#include "hardware/Storage.h"
+#include "types/TempLogRecord.h"
 
 ScreensProvider::ScreensProvider(Controls *controls)
 {
@@ -7,12 +10,16 @@ ScreensProvider::ScreensProvider(Controls *controls)
 
     _currentScreen = new MainScreen(this);
     _currentScreen->load(NULL);
+
+    _curHour = Rtc::getInstance()->getRtc()->getHours();
 }
 
 void ScreensProvider::tick(int8_t sensor1Value, int8_t sensor2Value)
 {
     _sensor1LastValue = sensor1Value;
     _sensor2LastValue = sensor2Value;
+
+    saveLogRecordIfNeed();
 
     _currentScreen->tick();
 
@@ -56,4 +63,21 @@ int8_t ScreensProvider::getLastSensor1Value()
 int8_t ScreensProvider::getLastSensor2Value()
 {
     return _sensor2LastValue;
+}
+
+void ScreensProvider::saveLogRecordIfNeed()
+{
+    uint8_t newHour = Rtc::getInstance()->getRtc()->getHours();
+    if (newHour == _curHour) {
+        return;
+    }
+
+    _curHour = newHour;
+    TempLogRecord record;
+    record.hour = _curHour;
+    record.date = Rtc::getInstance()->getRtc()->getDate();
+    record.month = Rtc::getInstance()->getRtc()->getMonth();
+    record.year = Rtc::getInstance()->getRtc()->getYear();
+
+    Storage::getInstance()->saveLogRecord(record);
 }
