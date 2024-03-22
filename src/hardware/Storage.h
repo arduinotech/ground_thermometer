@@ -44,6 +44,8 @@ class Storage
         void saveLogRecord(TempLogRecord logRecord);
         void showDataToConsole();
 
+        void getValues(uint16_t year, uint8_t month, uint8_t date, uint8_t hour, bool twoHoursFormat, uint8_t sensorNum, String *values);
+
     protected:
         Storage();
 

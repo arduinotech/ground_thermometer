@@ -28,7 +28,8 @@ class ShowHistoryScreen: public BaseScreen
         uint8_t _curDate;
         uint8_t _curMonth;
         uint8_t _curHour;
-        uint8_t _oneHoursFormat;
+        uint8_t _twoHoursFormat;
+        void reloadValues();
 };
 
 #endif

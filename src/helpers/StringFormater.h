@@ -7,6 +7,7 @@ class StringFormater
 {
     public:
         static String formatByteNum(uint8_t num);
+        static String formatForThreeSigns(int8_t num);
 };
 
 #endif

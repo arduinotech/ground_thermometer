@@ -38,8 +38,8 @@ void setup()
     Controls *controls = new Controls();
     screensProvider = new ScreensProvider(controls);
 
-    delay(3000);
-    Storage::getInstance()->showDataToConsole();
+    // delay(3000);
+    // Storage::getInstance()->showDataToConsole();
 }
 
 void loop()
