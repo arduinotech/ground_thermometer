@@ -6,6 +6,8 @@
 #include "screens/BaseScreen.h"
 #include "hardware/Config.h"
 
+#define SCREEN_OFF_TIMEOUT_MILLIS 60000
+
 class ScreensProvider
 {
     public:
@@ -24,6 +26,8 @@ class ScreensProvider
         int8_t _sensor2LastValue;
         int8_t _curHour;
         uint8_t _sensorNum;
+        bool _displayBacklight;
+        uint32_t _lastClickTime;
 
         void setCurrentScreen(BaseScreen::StaticConstructorPtr staticConstructorPtr);
         void saveLogRecordIfNeed();

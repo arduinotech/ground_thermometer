@@ -19,6 +19,16 @@ Display::Display()
     _lcd->clear();
 }
 
+void Display::noBacklight()
+{
+    _lcd->noBacklight();
+}
+
+void Display::backlight()
+{
+    _lcd->backlight();
+}
+
 void Display::clearScreen()
 {
     _lcd->clear();

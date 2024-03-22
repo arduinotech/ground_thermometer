@@ -1,6 +1,7 @@
 #include "ScreensProvider.h"
 #include "screens/MainScreen.h"
 #include "hardware/Rtc.h"
+#include "hardware/Display.h"
 #include "hardware/Storage.h"
 #include "types/TempLogRecord.h"
 #include "screens/ShowHistoryScreen.h"
@@ -13,10 +14,15 @@ ScreensProvider::ScreensProvider(Controls *controls)
     _currentScreen->load(NULL);
 
     _curHour = Rtc::getInstance()->getRtc()->getHours();
+
+    _displayBacklight = true;
+    _lastClickTime = millis();
 }
 
 void ScreensProvider::tick(int8_t sensor1Value, int8_t sensor2Value)
 {
+    uint32_t now = millis();
+
     _sensor1LastValue = sensor1Value;
     _sensor2LastValue = sensor2Value;
 
@@ -27,19 +33,48 @@ void ScreensProvider::tick(int8_t sensor1Value, int8_t sensor2Value)
     _controls->tick();
 
     if (_controls->isUpButtonPressed()) {
-        setCurrentScreen(_currentScreen->clickUpButton());
+        if (!_displayBacklight) {
+            _displayBacklight = true;
+            Display::getInstance()->backlight();
+        } else {
+            setCurrentScreen(_currentScreen->clickUpButton());
+        }
+        _lastClickTime = now;
     }
 
     if (_controls->isDownButtonPressed()) {
-        setCurrentScreen(_currentScreen->clickDownButton());
+        if (!_displayBacklight) {
+            _displayBacklight = true;
+            Display::getInstance()->backlight();
+        } else {
+            setCurrentScreen(_currentScreen->clickDownButton());
+        }
+        _lastClickTime = now;
     }
 
     if (_controls->isCancelButtonPressed()) {
-        setCurrentScreen(_currentScreen->clickCancelButton());
+        if (!_displayBacklight) {
+            _displayBacklight = true;
+            Display::getInstance()->backlight();
+        } else {
+            setCurrentScreen(_currentScreen->clickCancelButton());
+        }
+        _lastClickTime = now;
     }
 
     if (_controls->isOkButtonPressed()) {
-        setCurrentScreen(_currentScreen->clickOkButton());
+        if (!_displayBacklight) {
+            _displayBacklight = true;
+            Display::getInstance()->backlight();
+        } else {
+            setCurrentScreen(_currentScreen->clickOkButton());
+        }
+        _lastClickTime = now;
+    }
+
+    if (((now - _lastClickTime) > SCREEN_OFF_TIMEOUT_MILLIS) && _displayBacklight) {
+        Display::getInstance()->noBacklight();
+        _displayBacklight = false;
     }
 }
 
