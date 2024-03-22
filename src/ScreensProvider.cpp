@@ -3,6 +3,7 @@
 #include "hardware/Rtc.h"
 #include "hardware/Storage.h"
 #include "types/TempLogRecord.h"
+#include "screens/ShowHistoryScreen.h"
 
 ScreensProvider::ScreensProvider(Controls *controls)
 {
@@ -51,6 +52,9 @@ void ScreensProvider::setCurrentScreen(BaseScreen::StaticConstructorPtr staticCo
     BaseScreen *newScreen = (*staticConstructorPtr)(this);
     BaseScreen::StaticConstructorPtr fromScreen = _currentScreen->getPtrToStaticConstructor();
     delete _currentScreen;
+    if (ShowHistoryScreen::staticConstructor == staticConstructorPtr) {
+        ((ShowHistoryScreen*)newScreen)->setSensorNum(_sensorNum);
+    }
     newScreen->load(fromScreen);
     _currentScreen = newScreen;
 }
@@ -78,6 +82,18 @@ void ScreensProvider::saveLogRecordIfNeed()
     record.date = Rtc::getInstance()->getRtc()->getDate();
     record.month = Rtc::getInstance()->getRtc()->getMonth();
     record.year = Rtc::getInstance()->getRtc()->getYear();
+    record.tempSensor1 = _sensor1LastValue;
+    record.tempSensor2 = _sensor2LastValue;
 
     Storage::getInstance()->saveLogRecord(record);
+}
+
+void ScreensProvider::setSensorNum(uint8_t sensorNum)
+{
+    _sensorNum = sensorNum;
+}
+
+uint8_t ScreensProvider::getSensorNum()
+{
+    return _sensorNum;
 }

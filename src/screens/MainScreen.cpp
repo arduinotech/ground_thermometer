@@ -3,6 +3,7 @@
 #include "hardware/Rtc.h"
 #include "ScreensProvider.h"
 #include "TimeSetScreen.h"
+#include "ShowHistoryScreen.h"
 
 MainScreen::MainScreen(ScreensProvider *screensProvider):
 BaseScreen(screensProvider)
@@ -70,6 +71,12 @@ void MainScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
     Display::getInstance()->clearScreen();
     if (TimeSetScreen::staticConstructor == fromScreen) {
         _curMenuItem = 0;
+    } else if (ShowHistoryScreen::staticConstructor == fromScreen) {
+        if (_screensProvider->getSensorNum() == 1) {
+            _curMenuItem = 1;
+        } else {
+            _curMenuItem = 2;
+        }
     } else {
         _curMenuItem = 0;
     }
@@ -106,6 +113,12 @@ BaseScreen::StaticConstructorPtr MainScreen::clickOkButton()
 {
     if (0 == _curMenuItem) {
         return TimeSetScreen::staticConstructor;
+    } else if (1 == _curMenuItem) {
+        _screensProvider->setSensorNum(1);
+        return ShowHistoryScreen::staticConstructor;
+    } else if (2 == _curMenuItem) {
+        _screensProvider->setSensorNum(2);
+        return ShowHistoryScreen::staticConstructor;
     }
     return MainScreen::staticConstructor;
 }

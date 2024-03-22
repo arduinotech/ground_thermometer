@@ -14,6 +14,8 @@ class ScreensProvider
 
         int8_t getLastSensor1Value();
         int8_t getLastSensor2Value();
+        void setSensorNum(uint8_t sensorNum);
+        uint8_t getSensorNum();
 
     private:
         Controls *_controls;
@@ -21,6 +23,7 @@ class ScreensProvider
         int8_t _sensor1LastValue;
         int8_t _sensor2LastValue;
         int8_t _curHour;
+        uint8_t _sensorNum;
 
         void setCurrentScreen(BaseScreen::StaticConstructorPtr staticConstructorPtr);
         void saveLogRecordIfNeed();

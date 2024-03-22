@@ -15,7 +15,7 @@ BaseScreen *BaseScreen::staticConstructor(ScreensProvider *screensProvider)
 
 BaseScreen::~BaseScreen()
 {
-    Serial.println("BaseScreen::~BaseScreen()");
+    // Serial.println("BaseScreen::~BaseScreen()");
 }
 
 BaseScreen::StaticConstructorPtr BaseScreen::getPtrToStaticConstructor()
