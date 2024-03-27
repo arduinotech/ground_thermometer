@@ -74,7 +74,7 @@ BaseScreen::StaticConstructorPtr TimeSetScreen::clickUpButton()
         }
         Display::getInstance()->print(StringFormater::formatByteNum(_curSeconds), TimeSetScreen::posToCursorPos(_curPosition), 1);
     } else if (3 == _curPosition) {
-        if (_curDate > 0) {
+        if (_curDate > 1) {
             _curDate--;
         } else {
             if (_curMonth > 1) {
@@ -86,10 +86,10 @@ BaseScreen::StaticConstructorPtr TimeSetScreen::clickUpButton()
             _curDate = Date::getNumOfDaysInMonth(_curYear, _curMonth);
         }
         Display::getInstance()->print(StringFormater::formatByteNum(_curDate), TimeSetScreen::posToCursorPos(_curPosition), 1);
-        Display::getInstance()->print(StringFormater::formatByteNum(_curMonth), TimeSetScreen::posToCursorPos(_curPosition), 1);
-        Display::getInstance()->print(StringFormater::formatByteNum(_curYear), TimeSetScreen::posToCursorPos(_curPosition), 1);
+        Display::getInstance()->print(StringFormater::formatByteNum(_curMonth), TimeSetScreen::posToCursorPos(_curPosition + 1), 1);
+        Display::getInstance()->print(String(_curYear), TimeSetScreen::posToCursorPos(_curPosition + 2), 1);
     } else if (4 == _curPosition) {
-        if (_curMonth > 0) {
+        if (_curMonth > 1) {
             _curMonth--;
         } else {
             _curMonth = 12;
@@ -97,7 +97,7 @@ BaseScreen::StaticConstructorPtr TimeSetScreen::clickUpButton()
         Display::getInstance()->print(StringFormater::formatByteNum(_curMonth), TimeSetScreen::posToCursorPos(_curPosition), 1);
     } else { // 5
         _curYear--;
-        Display::getInstance()->print(StringFormater::formatByteNum(_curYear), TimeSetScreen::posToCursorPos(_curPosition), 1);
+        Display::getInstance()->print(String(_curYear), TimeSetScreen::posToCursorPos(_curPosition), 1);
     }
 
     return TimeSetScreen::staticConstructor;
@@ -139,8 +139,8 @@ BaseScreen::StaticConstructorPtr TimeSetScreen::clickDownButton()
             }
         }
         Display::getInstance()->print(StringFormater::formatByteNum(_curDate), TimeSetScreen::posToCursorPos(_curPosition), 1);
-        Display::getInstance()->print(StringFormater::formatByteNum(_curMonth), TimeSetScreen::posToCursorPos(_curPosition), 1);
-        Display::getInstance()->print(StringFormater::formatByteNum(_curYear), TimeSetScreen::posToCursorPos(_curPosition), 1);
+        Display::getInstance()->print(StringFormater::formatByteNum(_curMonth), TimeSetScreen::posToCursorPos(_curPosition + 1), 1);
+        Display::getInstance()->print(String(_curYear), TimeSetScreen::posToCursorPos(_curPosition + 2), 1);
     } else if (4 == _curPosition) {
         if (_curMonth < 12) {
             _curMonth++;
@@ -150,7 +150,7 @@ BaseScreen::StaticConstructorPtr TimeSetScreen::clickDownButton()
         Display::getInstance()->print(StringFormater::formatByteNum(_curMonth), TimeSetScreen::posToCursorPos(_curPosition), 1);
     } else { // 5
         _curYear++;
-        Display::getInstance()->print(StringFormater::formatByteNum(_curYear), TimeSetScreen::posToCursorPos(_curPosition), 1);
+        Display::getInstance()->print(String(_curYear), TimeSetScreen::posToCursorPos(_curPosition), 1);
     }
 
     return TimeSetScreen::staticConstructor;
