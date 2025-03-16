@@ -8,6 +8,11 @@ Controls::Controls()
     pinMode(PIN_BUTTON_CANCEL, INPUT_PULLUP);
     pinMode(PIN_BUTTON_OK, INPUT_PULLUP);
 
+    digitalWrite(PIN_BUTTON_UP, HIGH);
+    digitalWrite(PIN_BUTTON_DOWN, HIGH);
+    digitalWrite(PIN_BUTTON_CANCEL, HIGH);
+    digitalWrite(PIN_BUTTON_OK, HIGH);
+
     _lastClickUpButton = millis();
     _lastClickDownButton = millis();
     _lastClickCancelButton = millis();

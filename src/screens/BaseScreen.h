@@ -14,6 +14,7 @@ class BaseScreen
         virtual BaseScreen::StaticConstructorPtr getPtrToStaticConstructor() = 0;
 
         virtual void load(BaseScreen::StaticConstructorPtr fromScreen) = 0;
+        virtual void redraw();
 
         virtual BaseScreen::StaticConstructorPtr tick();
 
@@ -24,6 +25,7 @@ class BaseScreen
 
     protected:
         ScreensProvider *_screensProvider;
+        BaseScreen::StaticConstructorPtr _fromScreen;
 };
 
 #endif

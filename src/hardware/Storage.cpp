@@ -55,11 +55,6 @@ void Storage::showDataToConsole()
     uint8_t recordsCount;
     EEPROM.get(LOG_RECORDS_COUNT_OFFSET, recordsCount);
 
-    Serial << "newRecordOffset: " << newRecordOffset << endl;
-    Serial << "recordsCount: " << recordsCount << endl << endl;
-    Serial << "Data:" << endl;
-
-    Serial << "hour, date, month, year, sensor1, sensor2" << endl;
     uint16_t recordOffset = newRecordOffset;
     for (size_t i = 0; i < recordsCount; i++) {
         recordOffset -= LOG_RECORDS_SIZE;
@@ -68,8 +63,6 @@ void Storage::showDataToConsole()
         }
         TempLogRecord record;
         EEPROM.get(recordOffset, record);
-        Serial << record.hour << ", " << record.date << ", " << record.month << ", " << record.year
-                                << ", " << record.tempSensor1 << ", " << record.tempSensor2 << endl;
     }
 }
 

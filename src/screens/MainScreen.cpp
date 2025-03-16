@@ -1,3 +1,5 @@
+#include <Streaming.h>
+
 #include "MainScreen.h"
 #include "hardware/Display.h"
 #include "hardware/Rtc.h"
@@ -68,10 +70,16 @@ BaseScreen::StaticConstructorPtr MainScreen::tick()
 
 void MainScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
 {
+    _fromScreen = fromScreen;
+    redraw();
+}
+
+void MainScreen::redraw()
+{
     Display::getInstance()->clearScreen();
-    if (TimeSetScreen::staticConstructor == fromScreen) {
+    if (TimeSetScreen::staticConstructor == _fromScreen) {
         _curMenuItem = 0;
-    } else if (ShowHistoryScreen::staticConstructor == fromScreen) {
+    } else if (ShowHistoryScreen::staticConstructor == _fromScreen) {
         if (_screensProvider->getSensorNum() == 1) {
             _curMenuItem = 1;
         } else {
@@ -82,6 +90,12 @@ void MainScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
     }
 
     Display::getInstance()->print(String("->").c_str(), 0, _curMenuItem + 1);
+
+    _lastUpdateScreen = 0;
+    _lastDate = "";
+    _lastTime = "";
+    _lastSensor1Value = 0;
+    _lastSensor2Value = 0;
 }
 
 BaseScreen::StaticConstructorPtr MainScreen::clickUpButton()

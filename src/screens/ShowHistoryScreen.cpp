@@ -24,6 +24,11 @@ BaseScreen::StaticConstructorPtr ShowHistoryScreen::getPtrToStaticConstructor()
 
 void ShowHistoryScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
 {
+    redraw();
+}
+
+void ShowHistoryScreen::redraw()
+{
     _cursor = 0;
     _isSetting = false;
     _twoHoursFormat = false;
@@ -185,7 +190,6 @@ void ShowHistoryScreen::reloadValues()
     uint8_t curX = 8;
     uint8_t curY = 0;
     for (uint8_t i = 0; i < 12; i++) {
-        Serial << "curX = " << curX << ", curY = " << curY << ", value = " << values[i] << ", length = " << values[i].length() << endl;
         Display::getInstance()->print(values[i], curX, curY);
         if (curY < 3) {
             curY++;

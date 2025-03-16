@@ -11,6 +11,7 @@ class TimeSetScreen: public BaseScreen
         static BaseScreen *staticConstructor(ScreensProvider *screensProvider);
         BaseScreen::StaticConstructorPtr getPtrToStaticConstructor() override;
         void load(BaseScreen::StaticConstructorPtr fromScreen);
+        void redraw() override;
 
         BaseScreen::StaticConstructorPtr clickUpButton();
         BaseScreen::StaticConstructorPtr clickDownButton();

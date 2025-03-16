@@ -8,7 +8,7 @@
 
 void Error::throwError(String message)
 {
-    Serial << "ERROR: " << message << endl;
+//    Serial << "ERROR: " << message << endl;
     Display::getInstance()->error(message.c_str());
     delay(5000);
     exit(1);

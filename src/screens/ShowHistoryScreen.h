@@ -11,6 +11,7 @@ class ShowHistoryScreen: public BaseScreen
         static BaseScreen *staticConstructor(ScreensProvider *screensProvider);
         BaseScreen::StaticConstructorPtr getPtrToStaticConstructor() override;
         void load(BaseScreen::StaticConstructorPtr fromScreen);
+        void redraw() override;
 
         void setSensorNum(uint8_t sensorNum);
 

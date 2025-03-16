@@ -31,7 +31,7 @@
 #define LOG_RECORDS_LAST_OFFSET 993
 // Размер структуры
 #define LOG_RECORDS_SIZE 7
-// Кол-во структур, помещяющихся в память
+// Кол-во структур, помещающихся в память
 #define LOG_RECORDS_ALL_COUNT 140
 
 
@@ -44,7 +44,15 @@ class Storage
         void saveLogRecord(TempLogRecord logRecord);
         void showDataToConsole();
 
-        void getValues(uint16_t year, uint8_t month, uint8_t date, uint8_t hour, bool twoHoursFormat, uint8_t sensorNum, String *values);
+        void getValues(
+            uint16_t year,
+            uint8_t month,
+            uint8_t date,
+            uint8_t hour,
+            bool twoHoursFormat,
+            uint8_t sensorNum,
+            String *values
+        );
 
     protected:
         Storage();

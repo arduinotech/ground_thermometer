@@ -23,6 +23,11 @@ BaseScreen::StaticConstructorPtr TimeSetScreen::getPtrToStaticConstructor()
 
 void TimeSetScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
 {
+    redraw();
+}
+
+void TimeSetScreen::redraw()
+{
     Display::getInstance()->clearScreen();
 
     _curPosition = 0;

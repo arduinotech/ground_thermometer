@@ -9,7 +9,7 @@ String StringFormater::formatByteNum(uint8_t num)
     }
 }
 
-static String StringFormater::formatForThreeSigns(int8_t num)
+String StringFormater::formatForThreeSigns(int8_t num)
 {
     String value = String(num);
     if (value.length() == 0) {

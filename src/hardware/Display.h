@@ -12,8 +12,8 @@ class Display
         void print(const char *text, uint8_t x, uint8_t y);
         void print(String text, uint8_t x, uint8_t y);
         void error(const char *text);
-        void noBacklight();
-        void backlight();
+        void turnOffDisplay();
+        void turnOnDisplay();
 
     protected:
         Display();

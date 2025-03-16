@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #include "Display.h"
 #include "Config.h"
 
@@ -19,14 +21,20 @@ Display::Display()
     _lcd->clear();
 }
 
-void Display::noBacklight()
+void Display::turnOffDisplay()
 {
     _lcd->noBacklight();
+    _lcd->noDisplay();
+//    digitalWrite(PIN_POWER_DISPLAY, LOW);
 }
 
-void Display::backlight()
+void Display::turnOnDisplay()
 {
+//    digitalWrite(PIN_POWER_DISPLAY, HIGH);
+//    _lcd->init();
+    _lcd->display();
     _lcd->backlight();
+    _lcd->clear();
 }
 
 void Display::clearScreen()

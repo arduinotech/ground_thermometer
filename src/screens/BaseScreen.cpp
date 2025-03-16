@@ -29,6 +29,11 @@ void BaseScreen::load(BaseScreen::StaticConstructorPtr fromScreen)
     Error::throwError("Call virtual BaseScreen::load()");
 }
 
+void BaseScreen::redraw()
+{
+    Error::throwError("Call virtual BaseScreen::redraw()");
+}
+
 BaseScreen::StaticConstructorPtr BaseScreen::tick()
 {
     return getPtrToStaticConstructor();

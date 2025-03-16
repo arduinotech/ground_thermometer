@@ -10,7 +10,8 @@ class MainScreen: public BaseScreen
         MainScreen(ScreensProvider *screensProvider);
         static BaseScreen *staticConstructor(ScreensProvider *screensProvider);
         BaseScreen::StaticConstructorPtr getPtrToStaticConstructor() override;
-        void load(BaseScreen::StaticConstructorPtr fromScreen);
+        void load(BaseScreen::StaticConstructorPtr fromScreen) override;
+        void redraw() override;
 
         BaseScreen::StaticConstructorPtr tick();
         BaseScreen::StaticConstructorPtr clickUpButton();
